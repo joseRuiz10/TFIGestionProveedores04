@@ -1,0 +1,116 @@
+﻿@model IEnumerable<TFIGestionProveedores04.Equipo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/themes/redmond/jquery-ui.css" rel="stylesheet" />
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+
+            $("#fechas").datepicker({
+                dateFormat: 'dd/mm/yy',
+                defaultDate: new Date('08/08/2012'),
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: true,
+                yearSuffix: ''
+            });
+        });
+
+    </script>
+}
+<hr />
+<h2>Equipos</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <p>
+        <b>Desde</b> <input type="date" id="fechaInicio" name="fechaInicio" required> <b>Hasta</b>  <input type="date" id="fechaFin" name="fechaFin">   <button type="submit" class="btn btn-info">Buscar</button>
+
+    </p>
+}
+
+
+<p>
+    <a class="btn btn-success" href="~/Equipoes/Create" role="button">Nuevo</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.modelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha_Adqu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha_FinGarantia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.modelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Adqu.Value.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_FinGarantia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Proveedor.RazonSocial)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new
+                {
+                    id = item.idEquipo
+                }) |
+                @Html.ActionLink("Details", "Details", new
+                {
+                    id = item.idEquipo
+                }) |
+                @Html.ActionLink("Delete", "Delete", new
+                {
+                    id = item.idEquipo
+                })
+            </td>
+        </tr>
+    }
+
+</table>
+

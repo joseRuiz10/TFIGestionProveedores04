@@ -1,0 +1,86 @@
+﻿@model IEnumerable<TFIGestionProveedores04.Proveedor>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hr />
+<h2>Proveedores</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    <p style="">
+        <b>Razon Social  </b>@Html.TextBox("razonSocial")   <button type="submit" class="btn btn-info">Buscar</button>
+
+
+    </p>
+}
+
+
+<p>
+
+    <a class="btn btn-success" href="~/Proveedors/Create" role="button">Nuevo</a>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RazonSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.calificacion)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.calificacion)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new
+                {
+                    id = item.idProveedor
+                }) |
+                @Html.ActionLink("Details", "Details", new
+                {
+                    id = item.idProveedor
+                }) |
+                @Html.ActionLink("Delete", "Delete", new
+                {
+                    id = item.idProveedor
+                }) |
+                @Html.ActionLink("Calificaciones", "Calificaciones", new
+                {
+                    id = item.idProveedor
+                }) |
+                @Html.ActionLink("Equipos", "ListarEquipos", new
+                {
+                    id = item.idProveedor
+                }) |
+
+                @Html.ActionLink("Tecnicos", "ListarTecnicos", new
+                {
+                    id = item.idProveedor
+                })
+        </tr>
+    }
+
+</table>

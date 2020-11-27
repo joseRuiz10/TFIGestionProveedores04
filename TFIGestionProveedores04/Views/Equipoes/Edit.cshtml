@@ -1,0 +1,230 @@
+﻿@model TFIGestionProveedores04.Equipo
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/themes/redmond/jquery-ui.css" rel="stylesheet" />
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+
+            $("#Fecha_Adqu").datepicker({
+                dateFormat: 'dd/mm/yy',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                    'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié;', 'Juv', 'Vie', 'Sáb'],
+                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                weekHeader: 'Sm',
+
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ''
+            });
+        });
+
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            $("#Fecha_FinGarantia").datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                        'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié;', 'Juv', 'Vie', 'Sáb'],
+                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                    weekHeader: 'Sm',
+
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: ''
+                }
+
+            );
+        });
+
+    </script>
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Equipo</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new
+        {
+            @class = "text-danger"
+        })
+        @Html.HiddenFor(model => model.idEquipo)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.descripcion, htmlAttributes: new
+            {
+                @class = "control-label col-md-2"
+            })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.descripcion, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.descripcion, "", new
+                {
+                    @class = "text-danger"
+                })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.marca, htmlAttributes: new
+            {
+                @class = "control-label col-md-2"
+            })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.marca, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.marca, "", new
+                {
+                    @class = "text-danger"
+                })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.modelo, htmlAttributes: new
+            {
+                @class = "control-label col-md-2"
+            })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.modelo, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.modelo, "", new
+                {
+                    @class = "text-danger"
+                })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.color, htmlAttributes: new
+            {
+                @class = "control-label col-md-2"
+            })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.color, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.color, "", new
+                {
+                    @class = "text-danger"
+                })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Fecha_Adqu, htmlAttributes: new
+            {
+                @class = "control-label col-md-2"
+            })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Fecha_Adqu, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.Fecha_Adqu, "", new
+                {
+                    @class = "text-danger"
+                })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Fecha_FinGarantia, htmlAttributes: new
+            {
+                @class = "control-label col-md-2"
+            })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Fecha_FinGarantia, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.Fecha_FinGarantia, "", new
+                {
+                    @class = "text-danger"
+                })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idProveedor, "idProveedor", htmlAttributes: new
+            {
+                @class = "control-label col-md-2"
+            })
+            <div class="col-md-10">
+                @Html.DropDownList("idProveedor", null, htmlAttributes: new
+                {
+                    @class = "form-control"
+                })
+                @Html.ValidationMessageFor(model => model.idProveedor, "", new
+                {
+                    @class = "text-danger"
+                })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

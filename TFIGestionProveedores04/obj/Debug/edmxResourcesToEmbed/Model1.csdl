@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbGestionProveedores03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Calificacion">
+    <Key>
+      <PropertyRef Name="idCalificacion" />
+    </Key>
+    <Property Name="idCalificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="calificacion1" Type="Int32" />
+    <NavigationProperty Name="Calificacion_Proveedor" Relationship="Self.FK_Calificacion_Proveedor_Calificacion" FromRole="Calificacion" ToRole="Calificacion_Proveedor" />
+  </EntityType>
+  <EntityType Name="Calificacion_Proveedor">
+    <Key>
+      <PropertyRef Name="idCalificacion_Proveedor" />
+    </Key>
+    <Property Name="idCalificacion_Proveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="comentario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="idProveedor" Type="Int32" />
+    <Property Name="idCalificacion" Type="Int32" />
+    <NavigationProperty Name="Calificacion" Relationship="Self.FK_Calificacion_Proveedor_Calificacion" FromRole="Calificacion_Proveedor" ToRole="Calificacion" />
+    <NavigationProperty Name="Proveedor" Relationship="Self.FK_Calificacion_Proveedor_Proveedor" FromRole="Calificacion_Proveedor" ToRole="Proveedor" />
+  </EntityType>
+  <EntityType Name="Proveedor">
+    <Key>
+      <PropertyRef Name="idProveedor" />
+    </Key>
+    <Property Name="idProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RazonSocial" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="direccion" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="calificacion" Type="Double" />
+    <NavigationProperty Name="Calificacion_Proveedor" Relationship="Self.FK_Calificacion_Proveedor_Proveedor" FromRole="Proveedor" ToRole="Calificacion_Proveedor" />
+    <NavigationProperty Name="Equipo" Relationship="Self.FK_Equipo_Proveedor" FromRole="Proveedor" ToRole="Equipo" />
+    <NavigationProperty Name="Tecnico" Relationship="dbGestionProveedores03Model.FK_Tecnico_Proveedor" FromRole="Proveedor" ToRole="Tecnico" />
+  </EntityType>
+  <EntityType Name="Equipo">
+    <Key>
+      <PropertyRef Name="idEquipo" />
+    </Key>
+    <Property Name="idEquipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Adqu" Type="DateTime" Precision="0" />
+    <Property Name="Fecha_FinGarantia" Type="DateTime" Precision="0" />
+    <Property Name="idProveedor" Type="Int32" />
+    <NavigationProperty Name="Proveedor" Relationship="Self.FK_Equipo_Proveedor" FromRole="Equipo" ToRole="Proveedor" />
+  </EntityType>
+  <Association Name="FK_Calificacion_Proveedor_Calificacion">
+    <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="0..1" />
+    <End Role="Calificacion_Proveedor" Type="Self.Calificacion_Proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calificacion">
+        <PropertyRef Name="idCalificacion" />
+      </Principal>
+      <Dependent Role="Calificacion_Proveedor">
+        <PropertyRef Name="idCalificacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calificacion_Proveedor_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+    <End Role="Calificacion_Proveedor" Type="Self.Calificacion_Proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="Calificacion_Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Equipo_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="Equipo">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbGestionProveedores03Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Calificacion" EntityType="Self.Calificacion" />
+    <EntitySet Name="Calificacion_Proveedor" EntityType="Self.Calificacion_Proveedor" />
+    <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+    <EntitySet Name="Equipo" EntityType="Self.Equipo" />
+    <AssociationSet Name="FK_Calificacion_Proveedor_Calificacion" Association="Self.FK_Calificacion_Proveedor_Calificacion">
+      <End Role="Calificacion" EntitySet="Calificacion" />
+      <End Role="Calificacion_Proveedor" EntitySet="Calificacion_Proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calificacion_Proveedor_Proveedor" Association="Self.FK_Calificacion_Proveedor_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Calificacion_Proveedor" EntitySet="Calificacion_Proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Equipo_Proveedor" Association="Self.FK_Equipo_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Equipo" EntitySet="Equipo" />
+    </AssociationSet>
+    <EntitySet Name="Tecnico" EntityType="dbGestionProveedores03Model.Tecnico" />
+    <AssociationSet Name="FK_Tecnico_Proveedor" Association="dbGestionProveedores03Model.FK_Tecnico_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Tecnico" EntitySet="Tecnico" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Tecnico">
+    <Key>
+      <PropertyRef Name="idTecnico" />
+    </Key>
+    <Property Name="idTecnico" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono" Type="Int64" />
+    <Property Name="Direcccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="id_Proveedor" Type="Int32" />
+    <NavigationProperty Name="Proveedor" Relationship="dbGestionProveedores03Model.FK_Tecnico_Proveedor" FromRole="Tecnico" ToRole="Proveedor" />
+  </EntityType>
+  <Association Name="FK_Tecnico_Proveedor">
+    <End Type="dbGestionProveedores03Model.Proveedor" Role="Proveedor" Multiplicity="0..1" />
+    <End Type="dbGestionProveedores03Model.Tecnico" Role="Tecnico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="Tecnico">
+        <PropertyRef Name="id_Proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

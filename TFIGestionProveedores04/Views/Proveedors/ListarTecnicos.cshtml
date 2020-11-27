@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TFIGestionProveedores04.Tecnico>
+
+@{
+    ViewBag.Title = "ListarTecnicos";
+}
+
+<h2>ListarTecnicos</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apellido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direcccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.apellido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direcccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proveedor.RazonSocial)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idTecnico }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idTecnico }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idTecnico })
+        </td>
+    </tr>
+}
+
+</table>

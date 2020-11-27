@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbGestionProveedores03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Calificacion">
+    <Key>
+      <PropertyRef Name="idCalificacion" />
+    </Key>
+    <Property Name="idCalificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="calificacion" Type="int" />
+  </EntityType>
+  <EntityType Name="Calificacion_Proveedor">
+    <Key>
+      <PropertyRef Name="idCalificacion_Proveedor" />
+    </Key>
+    <Property Name="idCalificacion_Proveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="comentario" Type="varchar" MaxLength="50" />
+    <Property Name="idProveedor" Type="int" />
+    <Property Name="idCalificacion" Type="int" />
+  </EntityType>
+  <EntityType Name="Equipo">
+    <Key>
+      <PropertyRef Name="idEquipo" />
+    </Key>
+    <Property Name="idEquipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="marca" Type="varchar" MaxLength="50" />
+    <Property Name="modelo" Type="varchar" MaxLength="50" />
+    <Property Name="color" Type="varchar" MaxLength="50" />
+    <Property Name="Fecha_Adqu" Type="date" />
+    <Property Name="Fecha_FinGarantia" Type="date" />
+    <Property Name="idProveedor" Type="int" />
+  </EntityType>
+  <EntityType Name="Proveedor">
+    <Key>
+      <PropertyRef Name="idProveedor" />
+    </Key>
+    <Property Name="idProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RazonSocial" Type="nchar" MaxLength="100" />
+    <Property Name="Telefono" Type="nchar" MaxLength="15" />
+    <Property Name="direccion" Type="nchar" MaxLength="100" />
+    <Property Name="calificacion" Type="float" />
+  </EntityType>
+  <EntityType Name="Tecnico">
+    <Key>
+      <PropertyRef Name="idTecnico" />
+    </Key>
+    <Property Name="idTecnico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="apellido" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono" Type="bigint" />
+    <Property Name="Direcccion" Type="varchar" MaxLength="50" />
+    <Property Name="id_Proveedor" Type="int" />
+  </EntityType>
+  <Association Name="FK_Calificacion_Proveedor_Calificacion">
+    <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="0..1" />
+    <End Role="Calificacion_Proveedor" Type="Self.Calificacion_Proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calificacion">
+        <PropertyRef Name="idCalificacion" />
+      </Principal>
+      <Dependent Role="Calificacion_Proveedor">
+        <PropertyRef Name="idCalificacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calificacion_Proveedor_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+    <End Role="Calificacion_Proveedor" Type="Self.Calificacion_Proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="Calificacion_Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Equipo_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="Equipo">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tecnico_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+    <End Role="Tecnico" Type="Self.Tecnico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="Tecnico">
+        <PropertyRef Name="id_Proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbGestionProveedores03ModelStoreContainer">
+    <EntitySet Name="Calificacion" EntityType="Self.Calificacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Calificacion_Proveedor" EntityType="Self.Calificacion_Proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tecnico" EntityType="Self.Tecnico" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Calificacion_Proveedor_Calificacion" Association="Self.FK_Calificacion_Proveedor_Calificacion">
+      <End Role="Calificacion" EntitySet="Calificacion" />
+      <End Role="Calificacion_Proveedor" EntitySet="Calificacion_Proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calificacion_Proveedor_Proveedor" Association="Self.FK_Calificacion_Proveedor_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Calificacion_Proveedor" EntitySet="Calificacion_Proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Equipo_Proveedor" Association="Self.FK_Equipo_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Equipo" EntitySet="Equipo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tecnico_Proveedor" Association="Self.FK_Tecnico_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Tecnico" EntitySet="Tecnico" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
