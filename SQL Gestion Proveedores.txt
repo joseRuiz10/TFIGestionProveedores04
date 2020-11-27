@@ -1,0 +1,132 @@
+USE [dbGestionProveedores02]
+GO
+
+/****** Object:  Table [dbo].[Calificacion]    Script Date: 30/10/2020 16:29:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Calificacion](
+	[idCalificacion] [int] IDENTITY(1,1) NOT NULL,
+	[calificacion] [int] NULL,
+ CONSTRAINT [PK_Calificacion] PRIMARY KEY CLUSTERED 
+(
+	[idCalificacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [dbGestionProveedores02]
+GO
+
+/****** Object:  Table [dbo].[Proveedor]    Script Date: 30/10/2020 16:30:15 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Proveedor](
+	[idProveedor] [int] IDENTITY(1,1) NOT NULL,
+	[RazonSocial] [nchar](100) NULL,
+	[Telefono] [nchar](15) NULL,
+	[direccion] [nchar](100) NULL,
+	[calificacion] [float] NULL,
+ CONSTRAINT [PK_Proveedor] PRIMARY KEY CLUSTERED 
+(
+	[idProveedor] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+USE [dbGestionProveedores02]
+GO
+
+/****** Object:  Table [dbo].[Equipo]    Script Date: 30/10/2020 16:30:39 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Equipo](
+	[idEquipo] [int] IDENTITY(1,1) NOT NULL,
+	[descripcion] [varchar](50) NULL,
+	[marca] [varchar](50) NULL,
+	[modelo] [varchar](50) NULL,
+	[color] [varchar](50) NULL,
+	[Fecha_Adqu] [date] NULL,
+	[Fecha_FinGarantia] [date] NULL,
+	[idProveedor] [int] NULL
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Equipo]  WITH CHECK ADD  CONSTRAINT [FK_Equipo_Proveedor] FOREIGN KEY([idProveedor])
+REFERENCES [dbo].[Proveedor] ([idProveedor])
+GO
+
+ALTER TABLE [dbo].[Equipo] CHECK CONSTRAINT [FK_Equipo_Proveedor]
+GO
+
+USE [dbGestionProveedores02]
+GO
+
+/****** Object:  Table [dbo].[Calificacion_Proveedor]    Script Date: 30/10/2020 16:31:01 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Calificacion_Proveedor](
+	[idCalificacion_Proveedor] [int] IDENTITY(1,1) NOT NULL,
+	[comentario] [varchar](50) NULL,
+	[idProveedor] [int] NULL,
+	[idCalificacion] [int] NULL,
+ CONSTRAINT [PK_Calificacion_Proveedor] PRIMARY KEY CLUSTERED 
+(
+	[idCalificacion_Proveedor] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Calificacion_Proveedor]  WITH CHECK ADD  CONSTRAINT [FK_Calificacion_Proveedor_Calificacion] FOREIGN KEY([idCalificacion])
+REFERENCES [dbo].[Calificacion] ([idCalificacion])
+GO
+
+ALTER TABLE [dbo].[Calificacion_Proveedor] CHECK CONSTRAINT [FK_Calificacion_Proveedor_Calificacion]
+GO
+
+ALTER TABLE [dbo].[Calificacion_Proveedor]  WITH CHECK ADD  CONSTRAINT [FK_Calificacion_Proveedor_Proveedor] FOREIGN KEY([idProveedor])
+REFERENCES [dbo].[Proveedor] ([idProveedor])
+GO
+
+ALTER TABLE [dbo].[Calificacion_Proveedor] CHECK CONSTRAINT [FK_Calificacion_Proveedor_Proveedor]
+GO
+
+
+
+ create trigger cargarCalificacion
+ on Calificacion_Proveedor
+ for insert
+ as
+   begin
+
+		declare @cant int, @c int, @promedio float
+		set @cant = (select count(idProveedor) from Proveedor)
+		set @c=1
+		while @cant > 0
+		 begin
+		   
+		   set @cant = (select AVG(calificacion) from Calificacion inner join Calificacion_Proveedor on Calificacion.calificacion=Calificacion_Proveedor.idCalificacion and Calificacion_Proveedor.idProveedor=@c)
+		   update Proveedor 
+		   set calificacion = @cant
+		   where Proveedor.idProveedor=@c
+		   set @c= @c +1
+		 end
+			
+
+   end
